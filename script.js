@@ -1,12 +1,10 @@
 $(function(){
 var listObserver = new MutationObserver(newDOM); //при изменении DOM вызов функции newDOM
 listObserver.observe(document.body, {childList: true, subtree: true}); //слушаем body
-
-		//alert('Версия1 jQuery ' + jQuery.fn.jquery);
 		$('.audio').each(function (index) {
 		processingOfAudio(this);
 		});
-	
+	//coment
 	function processingOfAudio(current)
 	{
 		var $download_btn = $(current).find('.download_btn');
