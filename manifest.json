@@ -9,8 +9,7 @@
  ],
     "content_scripts": [ {
       "js":["jquery.js", "script.js"],
-      "matches": [ "http://vk.com/*", "http://*.vk.com/*", "https://vk.com/*", "https://*.vk.com/*" ],
-      "run_at": "document_end"
+      "matches": [ "http://vk.com/*", "http://*.vk.com/*", "https://vk.com/*", "https://*.vk.com/*" ]
    } ],  
      "browser_action": {
      "default_title":"Downloader Extension"
