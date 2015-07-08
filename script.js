@@ -29,7 +29,7 @@ $(function(){
 			var $titleSpan = $(current).find('.title_wrap').find("span.title"); // передается в функцию ниже, после него будет вставляться кнопка
 			appendBtn($titleSpan, directLink, title);
 
-			$area = $(current).find('.area');	
+			$area = $(current).find('.area');
 			hideShowEvent($area);		
 				
 		};
@@ -43,19 +43,28 @@ $(function(){
 	}
 	function newDOM(mutations) {
 		for (var i = 0; i < mutations.length; i++) {
-			var added = mutations[i].addedNodes;
+			var added = mutations[i].addedNodes;		
 			findAudio(added);
 		}
 	}
 
 	function findAudio(added) {
 
-		if($(added).hasClass("audio")) // При подгрузке страницы, added сразу является тем, чем надо. Сразу отдельный элемент с классом audio
+		if($(added).hasClass("audio")) // При подгрузке страницы, в added элементы с класса аудио ( а при переходе они внутри NodeList)
 		{
-			processingOfAudio(added);
+
+			if ($(added).length > 1) { // при поиске, в added оказывается массив ( а при прокрутке нет )
+				$(added).each(function (index) {
+					processingOfAudio(this);
+				});
+			}
+			else { // этот вариант срабатывает, когда просто прокручиваешь свои записи вниз
+				processingOfAudio(added);
+			}
+			
 
 		}
-		else // а при переходе на страницу с аудио, там какие-то NodeList внутри которых уже лежит аудио
+		else //при переходе на страницу с аудио, там какие-то NodeList внутри которых уже лежит аудио
 		{
 			var $audio = $(added).find('.audio');
 			
