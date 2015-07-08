@@ -42,10 +42,8 @@ $(function(){
 		});
 	}
 	function newDOM(mutations) {
-		console.log("newDOM output: ");
 		for (var i = 0; i < mutations.length; i++) {
 			var added = mutations[i].addedNodes;
-			console.log(added);
 			findAudio(added);
 		}
 	}
