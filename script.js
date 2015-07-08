@@ -1,61 +1,75 @@
 $(function(){
-	var listObserver = new MutationObserver(newDOM); // при изменении DOM вызов функции newDOM
-	listObserver.observe(document.body, {childList: true, subtree: true}); // слушаем body
+	var bodyObserver = new MutationObserver(newDOM); // при изменении DOM вызов функции newDOM
 
-	// alert('Версия1 jQuery ' + jQuery.fn.jquery);
-	$('.audio').each(function (index) {
+	bodyObserver.observe(document.body, {childList: true, subtree: true}); // слушаем body
+
+
+	$('.audio').each(function (index) { //при первом открытии ВК
 		processingOfAudio(this);
 	});
 	
 	function processingOfAudio(current)	{
-		var $download_btn = $(current).find('.download_btn');
+		var $downloadBtn = $(current).find('.download_btn');
 		
 		// проверка, нет ли такой кнопки уже на элементе
-		if(!$download_btn.length) {
+		if(!$downloadBtn.length) {
 
-			var title = $(current).find('.title_wrap').find("a").text(),
-				$play_btn = $(current).find('.play_btn');
+			var title = $(current).find('.title_wrap').find("a").text();
+			$playBtn = $(current).find('.play_btn');
 
-			if($play_btn.length) {
+			var directLink;
+			if($playBtn.length) {
 				// такой элемент на странице аудиозаписей
-			  	var directLink = $play_btn.find("input:hidden").val();
+			    directLink = $playBtn.find("input:hidden").val();
 			} else {
 				// а такой в постах
-				var directLink = $(current).find('.play_btn_wrap').siblings('input').val();
+				directLink = $(current).find('.play_btn_wrap').siblings('input').val();
 			}
 
-			var $titleSpan = $(current).find('.title_wrap').find("span.title"), // передается в функцию ниже, после него будет вставляться кнопка
-				$area = $(current).find('.area');
+			var $titleSpan = $(current).find('.title_wrap').find("span.title"); // передается в функцию ниже, после него будет вставляться кнопка
+			appendBtn($titleSpan, directLink, title);
 
-			$area.hover(function() {
+			$area = $(current).find('.area');	
+			hideShowEvent($area);		
+				
+		};
+	}
+	function hideShowEvent($area) {
+		$area.hover(function() {
 				$area.find(".download_btn").show();
 			}, function() {
 				$area.find(".download_btn").hide();
-			});
-
-			appendBtn($titleSpan, directLink, title);			
-		};
+		});
 	}
-
 	function newDOM(mutations) {
+		console.log("newDOM output: ");
 		for (var i = 0; i < mutations.length; i++) {
 			var added = mutations[i].addedNodes;
-
+			console.log(added);
 			findAudio(added);
 		}
 	}
 
 	function findAudio(added) {
-		var $audio = $(added).find('.audio');
-		
-		if ($audio.length) {
-			$audio.each(function (index) {
-				processingOfAudio(this);
-			});
-		};
+
+		if($(added).hasClass("audio")) // При подгрузке страницы, added сразу является тем, чем надо. Сразу отдельный элемент с классом audio
+		{
+			processingOfAudio(added);
+
+		}
+		else // а при переходе на страницу с аудио, там какие-то NodeList внутри которых уже лежит аудио
+		{
+			var $audio = $(added).find('.audio');
+			
+			if ($audio.length) {
+				$audio.each(function (index) {
+					processingOfAudio(this);
+				});
+			};
+		}
 	}
 
-	function appendBtn(titleSpan, directLink, title) {
+	function appendBtn($titleSpan, directLink, title) {
 		var btn = document.createElement('a');
 		$(btn).addClass("download_btn")
 
@@ -77,7 +91,7 @@ $(function(){
 			event.stopPropagation();
 		})
 
-		titleSpan.after(btn);
+		$titleSpan.after(btn);
 	}
 
 });
