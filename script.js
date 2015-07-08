@@ -78,13 +78,15 @@ $(function(){
 
 	function appendBtn($titleSpan, directLink, title) {
 		var btn = document.createElement('a');
+		var img = document.createElement('img');
 		$(btn).addClass("download_btn")
 
 		$(btn).css({
 			'float': 'right',
 			'height': '15px',
 			'width': '15px',
-			'background-image': 'url(http://www.beforward.jp/images/stocklist/download-icon.gif)'
+			//'background-image': 'url(http://www.beforward.jp/images/stocklist/download-icon.gif)',
+			'background-repeat': 'no-repeat'
 		});
 
 		$(btn).hide();
@@ -97,6 +99,16 @@ $(function(){
 		$(btn).on('click', function(event) {
 			event.stopPropagation();
 		})
+
+		$(img).attr({
+			'src': chrome.extension.getURL('Download_Arrow.png'),
+			'alt' : 'Скачать',
+			'height': '15px',
+			'width': '15px'
+		});
+
+
+		$(btn).append(img);
 
 		$titleSpan.after(btn);
 	}

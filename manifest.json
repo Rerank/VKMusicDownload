@@ -10,5 +10,8 @@
     "content_scripts": [ {
       "js":["jquery.js", "script.js"],
       "matches": [ "http://vk.com/*", "http://*.vk.com/*", "https://vk.com/*", "https://*.vk.com/*" ]
-   } ]
+   } ],
+   "web_accessible_resources": [
+        "Download_Arrow.png"
+    ]
 }
