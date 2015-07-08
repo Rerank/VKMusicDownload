@@ -9,9 +9,11 @@
  ],
     "content_scripts": [ {
       "js":["jquery.js", "script.js"],
+       "css": [ "style.css"],
       "matches": [ "http://vk.com/*", "http://*.vk.com/*", "https://vk.com/*", "https://*.vk.com/*" ]
    } ],
    "web_accessible_resources": [
-        "Download_Arrow.png"
+        "Download_Arrow_Blue.png",
+        "Download_Arrow_White.png"
     ]
 }
