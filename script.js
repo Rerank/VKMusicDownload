@@ -13,7 +13,9 @@ $(function(){
 		// проверка, нет ли такой кнопки уже на элементе
 		if(!$downloadBtn.length) {
 
-			var title = $(current).find('.title_wrap').find("a").text();
+			var titleArray = $(current).find('.title_wrap').find("a");
+			var title = $(titleArray[0]).text() + ' - ' + $(titleArray[1]).text();
+
 			$playBtn = $(current).find('.play_btn');
 
 			var directLink;
@@ -49,7 +51,7 @@ $(function(){
 
 	function findAudio(added) {
 
-		if($(added).hasClass("audio")) // При подгрузке страницы, в added элементы с класса аудио ( а при переходе они внутри NodeList)
+		if($(added).hasClass("audio")) // При подгрузке страницы, в added элементы с классом аудио ( а при переходе они внутри NodeList)
 		{
 
 			if ($(added).length > 1) { // при поиске, в added оказывается массив ( а при прокрутке нет )
@@ -76,40 +78,23 @@ $(function(){
 	}
 
 	function appendBtn($titleSpan, directLink, title) {
-		var btn = document.createElement('a');
+		var btn = document.createElement('div');
 		var img = document.createElement('img');
 		$(btn).addClass("download_btn")
-		/*
-		$(btn).css({
-			'float': 'right',
-			'height': '15px',
-			'width': '15px',
-			'background-image': 'url(' + chrome.extension.getURL('Download_Arrow_Blue.png') + ')',
-			'background-repeat': 'no-repeat'
-		});
-*/
 
 		$(btn).hide();
 
-		$(btn).attr({
-			'href': directLink,
-			'download': title
-		});
-
-		$(btn).on('click', function(event) {
-			event.stopPropagation();
+		$(btn).on('click', function(e) {
+			e.stopPropagation();
+			chrome.runtime.sendMessage(
+				{ 
+					command: 'download', 
+					params: { 
+					url: directLink, 
+					filename: title + ".mp3"
+					}}
+				);
 		})
-
-		/*
-		$(img).attr({
-			'src': chrome.extension.getURL('Download_Arrow_Blue.png'),
-			'alt' : 'Скачать',
-			'height': '15px',
-			'width': '15px'
-		});
-	*/
-
-		//$(btn).append(img);
 
 		$titleSpan.after(btn);
 	}
