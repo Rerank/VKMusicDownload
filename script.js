@@ -35,6 +35,7 @@ $(function(){
 				
 		};
 	}
+
 	function hideShowEvent($area) {
 		$area.hover(function() {
 				$area.find(".download_btn").show();
@@ -42,6 +43,7 @@ $(function(){
 				$area.find(".download_btn").hide();
 		});
 	}
+
 	function newDOM(mutations) {
 		for (var i = 0; i < mutations.length; i++) {
 			var added = mutations[i].addedNodes;		
@@ -51,22 +53,18 @@ $(function(){
 
 	function findAudio(added) {
 
-		if($(added).hasClass("audio")) // При подгрузке страницы, в added элементы с классом аудио ( а при переходе они внутри NodeList)
-		{
-
-			if ($(added).length > 1) { // при поиске, в added оказывается массив ( а при прокрутке нет )
+		if($(added).hasClass("audio")) {
+			// При подгрузке страницы, в added элементы с классом аудио ( а при переходе они внутри NodeList)
+			if($(added).length > 1) { // при поиске, в added оказывается массив ( а при прокрутке нет )
 				$(added).each(function (index) {
 					processingOfAudio(this);
 				});
-			}
-			else { // этот вариант срабатывает, когда просто прокручиваешь свои записи вниз
+			} else { // этот вариант срабатывает, когда просто прокручиваешь свои записи вниз
 				processingOfAudio(added);
 			}
-			
 
-		}
-		else //при переходе на страницу с аудио, там какие-то NodeList внутри которых уже лежит аудио
-		{
+		} else {
+			// при переходе на страницу с аудио, там какие-то NodeList внутри которых уже лежит аудио
 			var $audio = $(added).find('.audio');
 			
 			if ($audio.length) {
@@ -75,26 +73,26 @@ $(function(){
 				});
 			};
 		}
+		
 	}
 
 	function appendBtn($titleSpan, directLink, title) {
 		var btn = document.createElement('div');
-		var img = document.createElement('img');
+
 		$(btn).addClass("download_btn")
 
 		$(btn).hide();
 
 		$(btn).on('click', function(e) {
 			e.stopPropagation();
-			chrome.runtime.sendMessage(
-				{ 
+			chrome.runtime.sendMessage({ 
 					command: 'download', 
 					params: { 
-					url: directLink, 
-					filename: title + ".mp3"
-					}}
-				);
-		})
+						url: directLink, 
+						filename: title + ".mp3"
+					}
+			});
+		});
 
 		$titleSpan.after(btn);
 	}
