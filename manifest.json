@@ -1,18 +1,28 @@
 {
- "manifest_version":2,
- "name":"VK Music Downloader",
- "version":"1.0",
- "description":"Downloader of mp3 files from vk.com",
- "permissions": [
-  "https://vk.com/*",
-  "tabs"
- ],
-    "content_scripts": [ {
-      "js":["jquery.js", "script.js"],
-       "css": [ "style.css"],
-      "matches": [ "http://vk.com/*", "http://*.vk.com/*", "https://vk.com/*", "https://*.vk.com/*" ]
-   } ],
-   "web_accessible_resources": [
+    "manifest_version": 2,
+    "name": "VK Music Downloader",
+    "version": "1.0",
+    "description": "Downloader of mp3 files from vk.com",
+    "permissions": [
+        "https://vk.com/*",
+        "tabs"
+    ],
+    "content_scripts": [{
+        "js": [
+            "jquery-2.1.4.min.js",
+            "script.js"
+        ],
+        "css": [
+            "style.css"
+        ],
+        "matches": [
+            "http://vk.com/*",
+            "http://*.vk.com/*",
+            "https://vk.com/*",
+            "https://*.vk.com/*"
+        ]
+    }],
+    "web_accessible_resources": [
         "Download_Arrow_Blue.png",
         "Download_Arrow_White.png"
     ]
