@@ -12,8 +12,8 @@ $(function(){
 		
 		// проверка, нет ли такой кнопки уже на элементе
 		if(!$downloadBtn.length) {
-
-			var titleArray = $(current).find('.title_wrap').find("a");
+			var $titleWrap = $(current).find('.title_wrap'); // нужно отдельной переменной, что бы передать в функцию hideShowEvent
+			var titleArray = $titleWrap.find("a");
 			var title = $(titleArray[0]).text() + ' - ' + $(titleArray[1]).text();
 
 			$playBtn = $(current).find('.play_btn');
@@ -27,20 +27,22 @@ $(function(){
 				directLink = $(current).find('.play_btn_wrap').siblings('input').val();
 			}
 
-			var $titleSpan = $(current).find('.title_wrap').find("span.title"); // передается в функцию ниже, после него будет вставляться кнопка
-			appendBtn($titleSpan, directLink, title);
+			var $actionsContainer = $(current).find('.actions') // передается в функцию ниже, в него будет вставляться кнопка
+			appendBtn($actionsContainer, directLink, title);
 
 			$area = $(current).find('.area');
-			hideShowEvent($area);		
+			hideShowEvent($area,$titleWrap);		
 				
 		};
 	}
 
-	function hideShowEvent($area) {
+	function hideShowEvent($area, $titleWrap) {
 		$area.hover(function() {
 				$area.find(".download_btn").show();
+				$titleWrap.addClass("newWidth");
 			}, function() {
 				$area.find(".download_btn").hide();
+				$titleWrap.removeClass("newWidth");
 		});
 	}
 
@@ -76,10 +78,10 @@ $(function(){
 		
 	}
 
-	function appendBtn($titleSpan, directLink, title) {
+	function appendBtn($actionsContainer, directLink, title) {
 		var btn = document.createElement('div');
 
-		$(btn).addClass("download_btn")
+		$(btn).addClass("download_btn");
 
 		$(btn).hide();
 
@@ -94,7 +96,7 @@ $(function(){
 			});
 		});
 
-		$titleSpan.after(btn);
+		$actionsContainer.append(btn);
 	}
 
 });

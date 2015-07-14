@@ -2,9 +2,14 @@
 	float: right;
 	height: 15px;
 	width: 15px;
+	margin: 9px 10px 6px 0px;
 	background-image: url('chrome-extension://__MSG_@@extension_id__/Download_Arrow_Blue.png');
 	background-repeat: no-repeat;
 }
 .current .download_btn {
 	background-image: url('chrome-extension://__MSG_@@extension_id__/Download_Arrow_White.png');
+}
+.newWidth
+{
+	width: 300px !important;
 }
