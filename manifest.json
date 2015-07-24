@@ -28,6 +28,7 @@
   },
     "web_accessible_resources": [
         "Download_Arrow_Blue.png",
+        "Download_Arrow_Dark_Blue.png",
         "Download_Arrow_White.png"
     ]
 }
