@@ -13,9 +13,21 @@ $(function(){
 		// проверка, нет ли такой кнопки уже на элементе
 		if(!$downloadBtn.length) {
 			var $titleWrap = $(current).find('.title_wrap'); // нужно отдельной переменной, что бы передать в функцию hideShowEvent
-			var titleArray = $titleWrap.find("a");
-			var title = $(titleArray[0]).text() + ' - ' + $(titleArray[1]).text();
+			//var titleArray = $titleWrap.find("a");
+			var performer = $titleWrap.find("b a").text();
+			var trackName = $titleWrap.find(".title").text();
+			/*
+			if (titleArray.length == 1) {
+				console.log("1 element");
+				performer = $(titleArray[0]).text();
+				trackname = $(titleArray[0]).parent().next(".title").text();
+				console.log(trackname);
 
+			}else{
+				var title = $(titleArray[0]).text() + ' - ' + $(titleArray[1]).text();
+			}
+			*/
+			var title = performer + ' - ' + trackName;
 			$playBtn = $(current).find('.play_btn');
 
 			var directLink;
